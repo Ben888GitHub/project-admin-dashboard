@@ -13,6 +13,7 @@ export default function Home() {
 
 			<main className={styles.main}>
 				<h1>Mighty Jaxx Dashboard</h1>
+				<h2>To be updated...</h2>
 			</main>
 		</div>
 	);
