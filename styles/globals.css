@@ -19,6 +19,11 @@ a {
 	box-sizing: border-box;
 }
 
+[class='dark'] body {
+	color: #fff;
+	background: #1a202c;
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
