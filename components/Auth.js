@@ -31,7 +31,7 @@ function Auth({ login, register }) {
 								? 'Already have an account? '
 								: 'Don’t have an account yet? '}
 							<Link
-								href={register ? '/login' : '/register'}
+								href={register ? '/auth/login' : '/auth/register'}
 								className="font-medium text-primary-600 hover:underline dark:text-primary-500"
 							>
 								{register ? 'Sign in' : 'Sign up'}

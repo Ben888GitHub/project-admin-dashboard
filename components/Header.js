@@ -32,7 +32,7 @@ function Header() {
 					</div>
 				</Link>
 				<div className="flex">
-					<Link href="/login">
+					<Link href="/auth/login">
 						<button className="mr-4 text-white font-medium h-10 w-20 rounded-lg bg-gray-600 flex items-center justify-center hover:ring-2 ring-gray-400 transition-all duration-300 focus:outline-none">
 							Sign in
 						</button>
