@@ -1,6 +1,6 @@
 import { FcGoogle } from 'react-icons/fc';
 
-function GoogleSignIn() {
+function GoogleLogIn() {
 	return (
 		<button
 			type="button"
@@ -12,4 +12,4 @@ function GoogleSignIn() {
 	);
 }
 
-export default GoogleSignIn;
+export default GoogleLogIn;
