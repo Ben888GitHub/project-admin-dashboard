@@ -1,8 +1,8 @@
-import Signup from '../components/Signup';
-import Auth from '../components/Auth';
 import Head from 'next/head';
+import Auth from '../components/Auth';
+import SignIn from '../components/SignIn';
 
-function Register() {
+function Login() {
 	return (
 		<>
 			<Head>
@@ -12,10 +12,10 @@ function Register() {
 			</Head>
 
 			<div className="container mx-auto w-[340px] md:w-full lg:w-full">
-				<Auth register="register" />
+				<Auth login="login" />
 			</div>
 		</>
 	);
 }
 
-export default Register;
+export default Login;
