@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import AuthLabel from './AuthLabel';
-import dynamic from 'next/dynamic';
-const AuthButton = dynamic(() => import('./AuthButton'));
-const GoogleLogIn = dynamic(() => import('./GoogleLogIn'));
+import AuthButton from './AuthButton';
+import GoogleLogIn from './GoogleLogIn';
 
 function Auth({ register }) {
 	return (
