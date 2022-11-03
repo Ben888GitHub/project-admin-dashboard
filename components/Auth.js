@@ -11,7 +11,7 @@ function Auth({ register }) {
 					<h1 className="mb-8 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white ">
 						{register ? 'Sign up' : 'Sign in to your account'}
 					</h1>
-					<form className="space-y-8 " action="#">
+					<form className="space-y-7 lg:space-y-8 md:space-y-8 " action="#">
 						{register && (
 							<>
 								<AuthLabel name="firstName" title="First Name" />
