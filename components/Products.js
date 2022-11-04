@@ -6,7 +6,10 @@ function Products() {
 			<div className="rounded-t-lg h-[260px] bg-[url('https://flowbite.com/docs/images/blog/image-1.jpg')]   bg-cover ">
 				<div className=" p-2 md:p-5 lg:p-5  md:pb-10 lg:pb-10 pb-5 text-center">
 					<div className="flex justify-end">
-						<button className=" w-10 h-10  rounded-lg bg-black flex items-center justify-center hover:ring-2 ring-gray-400 transition-all duration-300 focus:outline-none">
+						<button
+							aria-label="edit-product"
+							className=" w-10 h-10  rounded-lg bg-black flex items-center justify-center hover:ring-2 ring-gray-400 transition-all duration-300 focus:outline-none"
+						>
 							<FaEdit className="text-xl text-white cursor-pointer" />
 						</button>
 					</div>
@@ -14,9 +17,9 @@ function Products() {
 			</div>
 
 			<div className="p-5 py-2.5 md:py-5 lg:py-5">
-				<h5 className="mb-2 text-xl md:text-2xl lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+				<p className="mb-2 text-xl md:text-2xl lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Apple Watch Series 7
-				</h5>
+				</p>
 
 				<p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
 					SKU: <span className="font-medium">KS778899</span>
