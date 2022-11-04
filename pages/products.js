@@ -1,8 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import Dashboard from '../components/Dashboard';
-import Dashboard2 from '../components/Dashboard2';
-import Dashboard3 from '../components/Dashboard3';
 import Products from '../components/Products';
 
 function dashboard() {
@@ -16,8 +12,16 @@ function dashboard() {
 			{/* <div className="container mx-auto">
 				<p className="text-4xl text-center font-bold mt-20">Dashboard</p>
 			</div> */}
+			{/* <div className="container mx-auto text-center"> */}
 
-			<Products />
+			{Array(4)
+				.fill(0)
+				.map((_, idx) => (
+					<div key={idx}>
+						<Products />
+					</div>
+				))}
+			{/* </div> */}
 		</>
 	);
 }

@@ -1,9 +1,16 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { FaRegPlusSquare } from 'react-icons/fa';
+import AuthDropdown from './AuthDropdown';
 
 const ColorMode = dynamic(() => import('./ColorMode'), { ssr: false });
 
 function Header() {
+	const router = useRouter();
+
+	console.log(router);
+
 	return (
 		<nav
 			className={`bg-neutral-800 border-b  border-gray-600 px-2 sm:px-4 py-3 w-full z-20 top-0 left-0 `}
@@ -32,12 +39,12 @@ function Header() {
 					</div>
 				</Link>
 				<div className="flex">
-					<Link href="/auth/login">
+					{/* <Link href="/auth/login">
 						<button className="mr-4 text-white font-medium h-10 w-20 rounded-lg bg-gray-600 flex items-center justify-center hover:ring-2 ring-gray-400 transition-all duration-300 focus:outline-none">
 							Sign in
 						</button>
-					</Link>
-
+					</Link> */}
+					{/* <AuthDropdown /> */}
 					<ColorMode />
 				</div>
 			</div>
