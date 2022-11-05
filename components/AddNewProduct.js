@@ -1,20 +1,9 @@
-import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { HiOutlinePlusCircle } from 'react-icons/hi';
 import ProductModal from './ProductModal';
 
 function AddNewProduct() {
 	const [open, setOpen] = useState(false);
-
-	const [isOpen, setIsOpen] = useState(true);
-
-	function closeModal() {
-		setIsOpen(false);
-	}
-
-	function openModal() {
-		setIsOpen(true);
-	}
 
 	return (
 		<>

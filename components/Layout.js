@@ -1,5 +1,4 @@
 import Header from './Header';
-// import NavigationBar from './NavigationBar';
 
 function Layout({ children }) {
 	return (

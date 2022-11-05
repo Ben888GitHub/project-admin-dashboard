@@ -1,7 +1,6 @@
 import { FaEdit } from 'react-icons/fa';
 function Products() {
 	return (
-		// <div>
 		<div className="mt-10 rounded-lg  mx-auto w-80 bg-white  border border-gray-200 shadow-md dark:bg-[#2D3748] dark:border-gray-700">
 			<div className="rounded-t-lg h-[260px] bg-[url('https://flowbite.com/docs/images/blog/image-1.jpg')]   bg-cover ">
 				<div className=" p-2 md:p-5 lg:p-5  md:pb-10 lg:pb-10 pb-5 text-center">
@@ -34,7 +33,6 @@ function Products() {
 				</div>
 			</div>
 		</div>
-		// </div>
 	);
 }
 
