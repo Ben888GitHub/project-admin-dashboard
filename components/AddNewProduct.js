@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { HiOutlinePlusCircle } from 'react-icons/hi';
 import ProductModal from './ProductModal';
 
