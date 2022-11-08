@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { deleteProductAsync } from '../redux/features/productSlice';
 import ProductModal from './ProductModal';
 
-function AllProducts({ product }) {
+function AllProducts({ product, setSelectedItems, selectedItems }) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = useState(false);
 
@@ -26,9 +26,25 @@ function AllProducts({ product }) {
 				</div>
 
 				<div className="p-5 py-2.5 md:py-5 lg:py-5">
-					<p className="mb-2 text-xl md:text-2xl lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-						{product.title}
-					</p>
+					<div className="flex mb-2 justify-between">
+						<p className=" text-xl md:text-2xl lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+							{product.title}
+						</p>
+						<input
+							id="default-checkbox"
+							type="checkbox"
+							className="float-right mt-2 w-4.5 h-4.5 md:w-5 md:h-5 lg:w-5 lg:h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+							onClick={(e) => {
+								e.target.checked === true
+									? setSelectedItems([...selectedItems, product.sku])
+									: setSelectedItems(
+											selectedItems.filter(
+												(selectedItem) => selectedItem !== product.sku
+											)
+									  );
+							}}
+						/>
+					</div>
 
 					<p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
 						SKU: <span className="font-medium">{product.sku}</span>

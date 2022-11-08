@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
 	addNewProduct,
+	deleteSelectedProducts,
 	deleteSingleProduct,
 	getProducts
 } from '../../utils/api-functions';
@@ -9,7 +10,7 @@ const initialState = {
 	products: [],
 	productInfo: {
 		title: '',
-		price: 0,
+		price: 1,
 		image: '',
 		sku: ''
 	}
@@ -28,6 +29,11 @@ export const getProductsAsync = createAsyncThunk(
 export const deleteProductAsync = createAsyncThunk(
 	'data/deleteProductAsync',
 	async (payload) => await deleteSingleProduct(payload)
+);
+
+export const deleteSelectedProductsAsync = createAsyncThunk(
+	'data/deleteSelectedProductsAsync',
+	async (payload) => await deleteSelectedProducts(payload)
 );
 
 export const productSlice = createSlice({
@@ -57,7 +63,16 @@ export const productSlice = createSlice({
 				state.products = state.products.filter(
 					(product) => product.sku !== action.payload
 				);
-			});
+			}),
+			builder.addCase(
+				deleteSelectedProductsAsync.fulfilled,
+				(state, action) => {
+					console.log(action);
+					state.products = state.products.filter(
+						(product) => !action.payload.includes(product.sku)
+					);
+				}
+			);
 	}
 });
 

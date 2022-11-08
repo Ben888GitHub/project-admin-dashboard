@@ -3,18 +3,27 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AllProducts from '../components/AllProducts';
-import { getProductsAsync } from '../redux/features/productSlice';
+import {
+	deleteSelectedProductsAsync,
+	getProductsAsync
+} from '../redux/features/productSlice';
 
 function Products() {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.products.products);
 	const [allProducts, setAllProducts] = useState([]);
+	const [selectedItems, setSelectedItems] = useState([]);
 
 	const { data: session } = useSession();
-	console.log(session);
+
 	useEffect(() => {
 		session && dispatch(getProductsAsync(session?.user?.email));
 	}, [session]);
+
+	const handleDeleteSelected = () => {
+		dispatch(deleteSelectedProductsAsync(selectedItems));
+		setSelectedItems([]);
+	};
 
 	return (
 		<div className="container mx-auto">
@@ -25,14 +34,24 @@ function Products() {
 			</Head>
 
 			<p className="text-2xl text-center m-5">Search Bar</p>
+			{selectedItems.length > 0 && (
+				<div className="text-center">
+					<button
+						onClick={handleDeleteSelected}
+						className=" text-white justify-center align-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm md:text-md lg:text-md px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+					>
+						Remove selected products
+					</button>
+				</div>
+			)}
 			<div className="flex flex-wrap ">
-				{/* {Array(4)
-					.fill(0)
-					.map((_, idx) => (
-						<AllProducts key={idx} />
-					))} */}
 				{products.map((product, idx) => (
-					<AllProducts key={idx} product={product} />
+					<AllProducts
+						key={idx}
+						product={product}
+						setSelectedItems={setSelectedItems}
+						selectedItems={selectedItems}
+					/>
 				))}
 			</div>
 		</div>

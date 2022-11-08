@@ -46,4 +46,24 @@ const deleteSingleProduct = async (payload) => {
 	return payload;
 };
 
-export { registerUser, addNewProduct, getProducts, deleteSingleProduct };
+const deleteSelectedProducts = async (payload) => {
+	console.log(payload);
+	const res = await fetch(`/api/delete-products`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(payload)
+	});
+	const deleteProducts = await res.json();
+	console.log(deleteProducts);
+	return payload;
+};
+
+export {
+	registerUser,
+	addNewProduct,
+	getProducts,
+	deleteSingleProduct,
+	deleteSelectedProducts
+};
