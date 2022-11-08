@@ -4,9 +4,10 @@ import {
 	deleteSingleProduct,
 	getProducts
 } from '../../utils/api-functions';
-import uuid from 'react-uuid';
+// import uuid from 'react-uuid';
+import { v4 as uuidv4 } from 'uuid';
 
-const skuID = uuid().slice(0, uuid().length - 30);
+const skuID = uuidv4().slice(0, uuidv4().length - 30);
 
 const initialState = {
 	products: [],
