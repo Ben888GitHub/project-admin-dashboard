@@ -12,13 +12,7 @@ function Auth({ register }) {
 						{register ? 'Sign up' : 'Sign in to your account'}
 					</h1>
 					<form className="space-y-7 lg:space-y-8 md:space-y-8 " action="#">
-						{register && (
-							<>
-								<AuthLabel name="username" title="Username" />
-							</>
-						)}
-						<AuthLabel name="email" title="Email Address" />
-						<AuthLabel name="password" title="Password" />
+						{register ? <AuthLabel username="username" /> : <AuthLabel />}
 						<AuthButton register={register} />
 						<p className="text-md font-light text-gray-500 dark:text-gray-400">
 							{register
