@@ -9,8 +9,7 @@ const signInUser = async ({ password, checkUser }) => {
 	if (!isMatch) {
 		throw new Error('Incorrect Password');
 	}
-	console.log(isMatch);
-	console.log(checkUser);
+
 	return checkUser;
 };
 

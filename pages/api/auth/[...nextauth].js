@@ -14,18 +14,17 @@ export default NextAuth({
 			name: 'credentials',
 			credentials: {},
 			async authorize(credentials, req) {
-				const { email, password } = credentials;
+				const { email, password, username } = credentials;
 				const client = await clientPromise;
 				const db = client.db('test');
 
 				const checkUser = await db.collection('users').findOne({ email });
-				console.log(email);
-				console.log(password);
+
 				if (!checkUser) {
 					throw new Error("You haven't registered yet");
 				} else {
-					console.log(checkUser);
-					return signInUser({ password, checkUser });
+					// console.log(checkUser);
+					return signInUser({ password, checkUser, username });
 				}
 			}
 		})

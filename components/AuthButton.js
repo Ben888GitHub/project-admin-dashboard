@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { createNewUserAsync, setUserInfo } from '../redux/features/authSlice';
 import toast, { Toaster } from 'react-hot-toast';
@@ -15,6 +14,16 @@ const notify = (message) =>
 		}
 	});
 
+const signUpSuccess = (message) => {
+	toast(message, {
+		style: {
+			padding: '16px',
+			color: '#FFFFFF',
+			background: '#15803d'
+		}
+	});
+};
+
 function AuthButton({ register }) {
 	const dispatch = useDispatch();
 	const router = useRouter();
@@ -29,7 +38,14 @@ function AuthButton({ register }) {
 		const res = await dispatch(createNewUserAsync(userInfo));
 		console.log(res);
 		if (res.payload.message === 'Registered successfully') {
-			alert(`Registered successfully`);
+			// alert(`Registered successfully`);
+			console.log(userInfo);
+			await signUpSuccess(res.payload.message);
+			await signIn('credentials', {
+				...userInfo,
+				redirect: false
+			});
+			router.push('/products');
 			setIsLoading(false);
 		} else {
 			await notify(res.payload.message);
@@ -43,12 +59,8 @@ function AuthButton({ register }) {
 		console.log(userInfo);
 		setIsLoading(true);
 
-		// todo, destructure this please
 		const res = await signIn('credentials', {
-			id: userInfo.id,
-			username: userInfo.username,
-			email: userInfo.email,
-			password: userInfo.password,
+			...userInfo,
 			redirect: false
 		});
 		if (res?.error) {

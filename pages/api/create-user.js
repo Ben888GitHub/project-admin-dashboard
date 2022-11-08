@@ -35,7 +35,11 @@ export default async function handler(req, res) {
 	// now we set user password to hashed password
 	const hashpass = await bcrypt.hash(body.password, salt);
 
-	const bodyObject = { email: body.email, password: hashpass };
+	const bodyObject = {
+		email: body.email,
+		password: hashpass,
+		username: body.username
+	};
 	console.log(bodyObject);
 	const newUser = await users.insertOne(bodyObject);
 	res.json({
