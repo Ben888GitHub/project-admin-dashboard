@@ -1,3 +1,4 @@
+import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import Auth from '../../components/Auth';
 
@@ -25,20 +26,20 @@ function AuthType({ authType }) {
 
 export default AuthType;
 
-export const getStaticProps = async ({ params }) => {
-	const { authType } = params;
+export const getServerSideProps = async (context) => {
+	const { req } = context;
+
+	const session = await getSession({ req });
+
+	if (session) {
+		return {
+			redirect: { destination: '/products' }
+		};
+	}
 
 	return {
 		props: {
-			authType
-		},
-		revalidate: 10
-	};
-};
-
-export const getStaticPaths = () => {
-	return {
-		paths: [],
-		fallback: 'blocking'
+			authType: context.query.authType
+		}
 	};
 };
