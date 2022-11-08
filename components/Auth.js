@@ -14,8 +14,7 @@ function Auth({ register }) {
 					<form className="space-y-7 lg:space-y-8 md:space-y-8 " action="#">
 						{register && (
 							<>
-								<AuthLabel name="firstName" title="First Name" />
-								<AuthLabel name="lastName" title="Last Name" />
+								<AuthLabel name="username" title="Username" />
 							</>
 						)}
 						<AuthLabel name="email" title="Email Address" />
