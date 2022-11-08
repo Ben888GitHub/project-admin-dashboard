@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { addNewProduct, getProducts } from '../../utils/api-functions';
+import uuid from 'react-uuid';
+
+const skuID = uuid().slice(0, uuid().length - 30);
 
 const initialState = {
 	products: [],
@@ -7,7 +10,7 @@ const initialState = {
 		title: '',
 		price: 0,
 		image: '',
-		sku: 'KS778899'
+		sku: skuID
 	}
 };
 
