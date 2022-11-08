@@ -1,12 +1,17 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Fragment } from 'react';
+import { signOut, useSession } from 'next-auth/react';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
 function AuthDropdown() {
+	const { data: session } = useSession();
+
+	// console.log(session);
+
 	return (
 		<Menu as="div" className="relative inline-block text-left mr-2">
 			<div>
@@ -34,7 +39,7 @@ function AuthDropdown() {
 									'block px-4 py-2 text-sm font-medium'
 								)}
 							>
-								Ben Ryan
+								{session?.user?.username || session?.user?.name}
 							</p>
 						</Menu.Item>
 						<Menu.Item>
@@ -44,7 +49,7 @@ function AuthDropdown() {
 									'block px-4 py-2 text-sm font-medium'
 								)}
 							>
-								benryan@gmail.com
+								{session?.user?.email}
 							</p>
 						</Menu.Item>
 					</div>
@@ -52,15 +57,17 @@ function AuthDropdown() {
 					<div className="py-1">
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href="#"
+								<p
 									className={classNames(
-										active ? 'bg-gray-500 text-white' : 'text-white',
+										active
+											? 'bg-gray-500 text-white font-medium cursor-pointer'
+											: 'text-white font-medium cursor-pointer',
 										'block px-4 py-2 text-sm'
 									)}
+									onClick={() => signOut({ callbackUrl: '/' })}
 								>
 									Sign out
-								</a>
+								</p>
 							)}
 						</Menu.Item>
 					</div>

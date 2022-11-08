@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createNewUserAsync, setUserInfo } from '../redux/features/authSlice';
 import toast, { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const notify = (message) =>
 	toast(message, {
@@ -15,6 +17,7 @@ const notify = (message) =>
 
 function AuthButton({ register }) {
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const userInfo = useSelector((state) => state.auth.userInfo);
 
 	const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +38,28 @@ function AuthButton({ register }) {
 		// await dispatch(setUserInfo({ username: '', email: '', password: '' }));
 	};
 
+	const handleLogIn = async (e) => {
+		e.preventDefault();
+		console.log(userInfo);
+		setIsLoading(true);
+
+		// todo, destructure this please
+		const res = await signIn('credentials', {
+			id: userInfo.id,
+			username: userInfo.username,
+			email: userInfo.email,
+			password: userInfo.password,
+			redirect: false
+		});
+		if (res?.error) {
+			await notify(res.error);
+			setIsLoading(false);
+		} else if (res.status === 200) {
+			router.push('/products');
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<>
 			{register ? (
@@ -46,7 +71,11 @@ function AuthButton({ register }) {
 					Sign up
 				</button>
 			) : (
-				<button className="w-full text-white bg-blue-600  hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+				<button
+					disabled={isLoading}
+					onClick={handleLogIn}
+					className="w-full text-white bg-blue-600  hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+				>
 					Sign in
 				</button>
 			)}

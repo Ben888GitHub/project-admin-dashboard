@@ -30,9 +30,11 @@ function WelcomePage() {
 						</button>
 					</Link>
 				) : (
-					<button className=" mt-3 md:mt-7 lg:mt-7 text-white px-3 h-10 font-medium rounded-lg bg-gray-600 text-md  text-center  inline-flex items-center mr-4 hover:ring-2 ring-gray-400 transition-all duration-300 focus:outline-none">
-						View Products
-					</button>
+					<Link href="/products">
+						<button className=" mt-3 md:mt-7 lg:mt-7 text-white px-3 h-10 font-medium rounded-lg bg-gray-600 text-md  text-center  inline-flex items-center mr-4 hover:ring-2 ring-gray-400 transition-all duration-300 focus:outline-none">
+							View Products
+						</button>
+					</Link>
 				)}
 			</div>
 		</div>

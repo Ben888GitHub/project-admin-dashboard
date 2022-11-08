@@ -2,6 +2,7 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import NextAuth from 'next-auth';
 import clientPromise from '../../../lib/mongodb';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { signInUser } from '../../../utils/signin-user';
 
 export default NextAuth({
 	adapter: MongoDBAdapter(clientPromise),
@@ -24,7 +25,7 @@ export default NextAuth({
 					throw new Error("You haven't registered yet");
 				} else {
 					console.log(checkUser);
-					// return signInUser({ password, checkUser });
+					return signInUser({ password, checkUser });
 				}
 			}
 		})

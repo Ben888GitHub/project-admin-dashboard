@@ -13,6 +13,8 @@ export default async function handler(req, res) {
 	// query the registered user by email
 	const registeredUser = await users.findOne({ email: body.email });
 
+	console.log(body.password.length);
+
 	if (registeredUser) {
 		res.status(200).json({ message: 'User already registered' });
 		return;
@@ -21,6 +23,10 @@ export default async function handler(req, res) {
 		res
 			.status(200)
 			.json({ message: 'Password / Email / Username cannot be empty' });
+		return;
+	}
+	if (body.password.length < 6) {
+		res.status(200).json({ message: 'Password must be at least 6 characters' });
 		return;
 	}
 

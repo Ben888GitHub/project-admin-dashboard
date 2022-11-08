@@ -29,6 +29,10 @@ export const getServerSideProps = async (context) => {
 	const { req } = context;
 	const session = await getSession({ req });
 
+	console.log(session);
+
+	// const {email, image}
+
 	if (!session) {
 		return {
 			redirect: { destination: '/auth/login' }
