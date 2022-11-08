@@ -1,3 +1,4 @@
+import { getSession, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Products from '../components/Products';
 
@@ -23,3 +24,18 @@ function products() {
 }
 
 export default products;
+
+export const getServerSideProps = async (context) => {
+	const { req } = context;
+	const session = await getSession({ req });
+
+	if (!session) {
+		return {
+			redirect: { destination: '/auth/login' }
+		};
+	}
+
+	return {
+		props: { data: 'products' }
+	};
+};
