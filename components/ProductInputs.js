@@ -7,6 +7,7 @@ import {
 	addProductAsync,
 	setProductInfo
 } from '../redux/features/productSlice';
+import uuid from 'react-uuid';
 
 function ProductInputs({ setOpen, edit }) {
 	const cancelButtonRef = useRef(null);
@@ -23,6 +24,8 @@ function ProductInputs({ setOpen, edit }) {
 		const res = await dispatch(
 			addProductAsync({
 				...productInfo,
+				sku: uuid().slice(0, uuid().length - 30),
+				// sku: String(Math.random()).slice(12),
 				author: {
 					email: session?.data?.user?.email
 				}

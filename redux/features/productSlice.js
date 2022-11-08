@@ -4,10 +4,6 @@ import {
 	deleteSingleProduct,
 	getProducts
 } from '../../utils/api-functions';
-// import uuid from 'react-uuid';
-import { v4 as uuidv4 } from 'uuid';
-
-const skuID = uuidv4().slice(0, uuidv4().length - 30);
 
 const initialState = {
 	products: [],
@@ -15,7 +11,7 @@ const initialState = {
 		title: '',
 		price: 0,
 		image: '',
-		sku: skuID
+		sku: ''
 	}
 };
 
