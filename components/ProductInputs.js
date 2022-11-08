@@ -1,9 +1,44 @@
 import { Dialog } from '@headlessui/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	addProductAsync,
+	setProductInfo
+} from '../redux/features/productSlice';
 
 function ProductInputs({ setOpen, edit }) {
 	const cancelButtonRef = useRef(null);
+	const dispatch = useDispatch();
+	const session = useSession();
+
+	// console.log(session);
+
+	const productInfo = useSelector((state) => state.products.productInfo);
+
+	const handleAddProduct = async (e) => {
+		e.preventDefault();
+		// console.log(productInfo);
+		const res = await dispatch(
+			addProductAsync({
+				...productInfo,
+				author: {
+					email: session?.data?.user?.email
+				}
+			})
+		);
+		console.log(res);
+		await dispatch(
+			setProductInfo({
+				title: '',
+				price: '',
+				image: '',
+				sku: '',
+				author: { email: '' }
+			})
+		);
+	};
 
 	return (
 		<>
@@ -23,7 +58,7 @@ function ProductInputs({ setOpen, edit }) {
 									htmlFor="newProduct"
 									className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 								>
-									Name
+									Title
 								</label>
 								<input
 									type="text"
@@ -31,6 +66,12 @@ function ProductInputs({ setOpen, edit }) {
 									id="newProduct"
 									className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 									placeholder="New Product"
+									value={productInfo.title}
+									onChange={(e) =>
+										dispatch(
+											setProductInfo({ ...productInfo, title: e.target.value })
+										)
+									}
 									required
 								/>
 							</div>
@@ -50,6 +91,16 @@ function ProductInputs({ setOpen, edit }) {
 										id="price"
 										className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 										placeholder="0"
+										value={productInfo.price}
+										onChange={(e) =>
+											dispatch(
+												setProductInfo({
+													...productInfo,
+													price: e.target.value
+												})
+											)
+										}
+										required
 									/>
 								</div>
 							</div>
@@ -65,30 +116,50 @@ function ProductInputs({ setOpen, edit }) {
 									aria-describedby="file_input_help"
 									id="file_input"
 									type="file"
+									value={productInfo.image}
+									onChange={(e) =>
+										dispatch(
+											setProductInfo({
+												...productInfo,
+												image: e.target.value
+											})
+										)
+									}
+									required
 								/>
-								<p
-									className="mt-1 text-sm text-gray-500 dark:text-gray-300"
-									id="file_input_help"
-								>
-									SVG, PNG, JPG or GIF (MAX. 800x400px).
-								</p>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 			<div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+				{/* todo, change different color if disabled */}
 				<button
+					disabled={
+						productInfo.title === '' ||
+						productInfo.price === '' ||
+						productInfo.image === ''
+							? true
+							: false
+					}
 					type="button"
 					className="inline-flex w-full justify-center rounded-md border border-transparent bg-gray-900 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-					onClick={() => setOpen(false)}
+					onClick={(e) => {
+						handleAddProduct(e);
+						setOpen(false);
+					}}
 				>
 					Add
 				</button>
 				<button
 					type="button"
 					className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 dark:border-none bg-white dark:bg-gray-500 dark:text-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-					onClick={() => setOpen(false)}
+					onClick={() => {
+						setOpen(false);
+						dispatch(
+							setProductInfo({ title: '', price: '', image: '', sku: '' })
+						);
+					}}
 					ref={cancelButtonRef}
 				>
 					Cancel

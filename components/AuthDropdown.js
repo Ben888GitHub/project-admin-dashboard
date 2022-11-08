@@ -10,7 +10,7 @@ function classNames(...classes) {
 function AuthDropdown() {
 	const { data: session } = useSession();
 
-	console.log(session);
+	// console.log(session);
 
 	return (
 		<Menu as="div" className="relative inline-block text-left mr-2">

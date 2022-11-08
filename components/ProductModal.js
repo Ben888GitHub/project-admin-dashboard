@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import ProductInputs from './ProductInputs';
+import { useDispatch, useSelector } from 'react-redux';
 
 function ProductModal({ open, setOpen, edit }) {
 	return (

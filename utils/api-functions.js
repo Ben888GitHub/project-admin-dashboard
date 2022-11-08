@@ -11,6 +11,7 @@ const registerUser = async (payload) => {
 };
 
 const addNewProduct = async (payload) => {
+	console.log(payload);
 	const res = await fetch('/api/products', {
 		method: 'POST',
 		body: JSON.stringify(payload)
@@ -20,4 +21,16 @@ const addNewProduct = async (payload) => {
 	return payload;
 };
 
-export { registerUser, addNewProduct };
+const getProducts = async (payload) => {
+	console.log(payload);
+	const res = await fetch(`/api/products/${payload}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+	const allProducts = await res.json();
+	return allProducts.data;
+};
+
+export { registerUser, addNewProduct, getProducts };

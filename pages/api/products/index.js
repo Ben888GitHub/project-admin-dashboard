@@ -6,6 +6,7 @@ export default async function handler(req, res) {
 	const products = db.collection('products');
 
 	const { body, method } = req;
+	console.log(body);
 	let bodyObject = JSON.parse(body);
 	const newProduct = await products.insertOne(bodyObject);
 	res.json({ status: 200, data: newProduct });

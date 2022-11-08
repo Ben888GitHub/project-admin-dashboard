@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import ProductModal from './ProductModal';
 
-function Products() {
+function AllProducts({ product }) {
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -24,15 +24,15 @@ function Products() {
 
 				<div className="p-5 py-2.5 md:py-5 lg:py-5">
 					<p className="mb-2 text-xl md:text-2xl lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-						Apple Watch Series 7
+						{product.title}
 					</p>
 
 					<p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-						SKU: <span className="font-medium">KS778899</span>
+						SKU: <span className="font-medium">{product.sku}</span>
 					</p>
 					<div className="flex justify-between items-center mb-1.5 lg:mb-0 md:mb-0">
 						<span className="text-2xl md:text-3xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-							$599
+							${product.price}
 						</span>
 						<button className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm md:text-md lg:text-md px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
 							Delete
@@ -40,9 +40,9 @@ function Products() {
 					</div>
 				</div>
 			</div>
-			<ProductModal open={open} setOpen={setOpen} edit="edit" />
+			{/* <ProductModal open={open} setOpen={setOpen} edit="edit" /> */}
 		</>
 	);
 }
 
-export default Products;
+export default AllProducts;

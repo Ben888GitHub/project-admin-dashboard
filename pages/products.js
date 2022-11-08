@@ -1,8 +1,21 @@
 import { getSession, useSession } from 'next-auth/react';
 import Head from 'next/head';
-import Products from '../components/Products';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import AllProducts from '../components/AllProducts';
+import { getProductsAsync } from '../redux/features/productSlice';
 
-function products() {
+function Products() {
+	const dispatch = useDispatch();
+	const products = useSelector((state) => state.products.products);
+	const [allProducts, setAllProducts] = useState([]);
+
+	const { data: session } = useSession();
+	console.log(session);
+	useEffect(() => {
+		session && dispatch(getProductsAsync(session?.user?.email));
+	}, [session]);
+
 	return (
 		<div className="container mx-auto">
 			<Head>
@@ -13,17 +26,20 @@ function products() {
 
 			<p className="text-2xl text-center m-5">Search Bar</p>
 			<div className="flex flex-wrap ">
-				{Array(4)
+				{/* {Array(4)
 					.fill(0)
 					.map((_, idx) => (
-						<Products key={idx} />
-					))}
+						<AllProducts key={idx} />
+					))} */}
+				{products.map((product, idx) => (
+					<AllProducts key={idx} product={product} />
+				))}
 			</div>
 		</div>
 	);
 }
 
-export default products;
+export default Products;
 
 export const getServerSideProps = async (context) => {
 	const { req } = context;
