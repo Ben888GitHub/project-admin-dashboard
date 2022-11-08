@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addNewProduct, getProducts } from '../../utils/api-functions';
+import {
+	addNewProduct,
+	deleteSingleProduct,
+	getProducts
+} from '../../utils/api-functions';
 import uuid from 'react-uuid';
 
 const skuID = uuid().slice(0, uuid().length - 30);
@@ -24,6 +28,11 @@ export const getProductsAsync = createAsyncThunk(
 	async (payload) => await getProducts(payload)
 );
 
+export const deleteProductAsync = createAsyncThunk(
+	'data/deleteProductAsync',
+	async (payload) => await deleteSingleProduct(payload)
+);
+
 export const productSlice = createSlice({
 	name: 'products',
 	initialState,
@@ -46,6 +55,11 @@ export const productSlice = createSlice({
 		}),
 			builder.addCase(getProductsAsync.fulfilled, (state, action) => {
 				state.products = action.payload;
+			}),
+			builder.addCase(deleteProductAsync.fulfilled, (state, action) => {
+				state.products = state.products.filter(
+					(product) => product.sku !== action.payload
+				);
 			});
 	}
 });

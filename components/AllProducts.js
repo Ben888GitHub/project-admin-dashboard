@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { deleteProductAsync } from '../redux/features/productSlice';
 import ProductModal from './ProductModal';
 
 function AllProducts({ product }) {
+	const dispatch = useDispatch();
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -34,7 +37,10 @@ function AllProducts({ product }) {
 						<span className="text-2xl md:text-3xl lg:text-3xl font-bold text-gray-900 dark:text-white">
 							${product.price}
 						</span>
-						<button className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm md:text-md lg:text-md px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+						<button
+							onClick={() => dispatch(deleteProductAsync(product.sku))}
+							className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm md:text-md lg:text-md px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+						>
 							Delete
 						</button>
 					</div>

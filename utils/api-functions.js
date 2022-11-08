@@ -33,4 +33,17 @@ const getProducts = async (payload) => {
 	return allProducts.data;
 };
 
-export { registerUser, addNewProduct, getProducts };
+const deleteSingleProduct = async (payload) => {
+	console.log(payload);
+	const res = await fetch(`/api/product/${payload}`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+	const deleteProduct = await res.json();
+	console.log(deleteProduct);
+	return payload;
+};
+
+export { registerUser, addNewProduct, getProducts, deleteSingleProduct };
