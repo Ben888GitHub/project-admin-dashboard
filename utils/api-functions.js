@@ -10,4 +10,14 @@ const registerUser = async (payload) => {
 	return newUser;
 };
 
-export { registerUser };
+const addNewProduct = async (payload) => {
+	const res = await fetch('/api/products', {
+		method: 'POST',
+		body: JSON.stringify(payload)
+	});
+	const newProduct = await res.json();
+	console.log(newProduct);
+	return payload;
+};
+
+export { registerUser, addNewProduct };

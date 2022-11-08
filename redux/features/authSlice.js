@@ -23,10 +23,9 @@ export const authSlice = createSlice({
 			state.userInfo = {
 				...state.userInfo,
 				id: String(Math.random()),
-				// todo, destructure this please
-				username: username,
-				email: email,
-				password: password
+				username,
+				email,
+				password
 			};
 		}
 	}
