@@ -19,6 +19,7 @@ function AddNewProduct() {
 				<br />
 			</button>
 			<meta name="viewport" content="width=device-width, user-scalable=no" />
+			{/* {open && <ProductModal open={open} setOpen={setOpen} />} */}
 			<ProductModal open={open} setOpen={setOpen} />
 		</>
 	);

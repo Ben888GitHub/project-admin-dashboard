@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { deleteProductAsync } from '../redux/features/productSlice';
-import ProductModal from './ProductModal';
+import { deleteProductAsync, setProduct } from '../redux/features/productSlice';
+import EditProductModal from './EditProductModal';
 
 function AllProducts({ product, setSelectedItems, selectedItems }) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = useState(false);
+	const [isModal, setIsModal] = useState(false);
 
 	return (
 		<>
@@ -17,7 +18,12 @@ function AllProducts({ product, setSelectedItems, selectedItems }) {
 							<button
 								aria-label="edit-product"
 								className=" w-10 h-10  rounded-lg bg-black flex items-center justify-center hover:ring-2 ring-gray-400 transition-all duration-300 focus:outline-none"
-								onClick={() => setOpen(true)}
+								onClick={() => {
+									dispatch(setProduct(product));
+									setIsModal(true);
+									setOpen(true);
+								}}
+								// onClick={() => alert(product.title)}
 							>
 								<FaEdit className="text-xl text-white cursor-pointer" />
 							</button>
@@ -62,6 +68,8 @@ function AllProducts({ product, setSelectedItems, selectedItems }) {
 					</div>
 				</div>
 			</div>
+			{/* <EditProductModal open={open} setOpen={setOpen} /> */}
+			{isModal && <EditProductModal open={open} setOpen={setOpen} />}
 			{/* <ProductModal open={open} setOpen={setOpen} edit="edit" /> */}
 		</>
 	);

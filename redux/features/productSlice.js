@@ -13,7 +13,8 @@ const initialState = {
 		price: 1,
 		image: '',
 		sku: ''
-	}
+	},
+	product: {}
 };
 
 export const addProductAsync = createAsyncThunk(
@@ -49,6 +50,11 @@ export const productSlice = createSlice({
 				image,
 				sku
 			};
+		},
+		setProduct: (state, action) => {
+			// const { title, price, image, sku } = action.payload;
+			console.log(action);
+			state.product = action.payload;
 		}
 	},
 	extraReducers: (builder) => {
@@ -76,4 +82,4 @@ export const productSlice = createSlice({
 	}
 });
 
-export const { setProductInfo } = productSlice.actions;
+export const { setProductInfo, setProduct } = productSlice.actions;

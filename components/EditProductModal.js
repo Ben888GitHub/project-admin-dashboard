@@ -1,9 +1,8 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import ProductInputs from './ProductInputs';
-import { useDispatch, useSelector } from 'react-redux';
+import EditProductInput from './EditProductInput';
 
-function ProductModal({ open, setOpen }) {
+function EditProductModal({ open, setOpen }) {
 	console.log('rerender');
 
 	return (
@@ -34,7 +33,7 @@ function ProductModal({ open, setOpen }) {
 						>
 							{/* This is to adjust the Dialog size and shape */}
 							<Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md">
-								<ProductInputs setOpen={setOpen} />
+								<EditProductInput setOpen={setOpen} />
 							</Dialog.Panel>
 						</Transition.Child>
 					</div>
@@ -44,4 +43,4 @@ function ProductModal({ open, setOpen }) {
 	);
 }
 
-export default ProductModal;
+export default EditProductModal;

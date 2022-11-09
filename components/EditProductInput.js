@@ -1,43 +1,20 @@
 import { Dialog } from '@headlessui/react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	addProductAsync,
-	setProduct,
-	setProductInfo
-} from '../redux/features/productSlice';
-import uuid from 'react-uuid';
+import { setProduct } from '../redux/features/productSlice';
 
-function ProductInputs({ setOpen, edit }) {
+function EditProductInput({ setOpen }) {
 	const cancelButtonRef = useRef(null);
 	const dispatch = useDispatch();
-	const session = useSession();
-	const productInfo = useSelector((state) => state.products.productInfo);
 
-	const handleAddProduct = async (e) => {
+	const product = useSelector((state) => state.products.product);
+
+	console.log(product);
+
+	const handleEditProduct = (e) => {
 		e.preventDefault();
-		// console.log(productInfo);
-		const res = await dispatch(
-			addProductAsync({
-				...productInfo,
-				sku: uuid().slice(0, uuid().length - 30),
-				author: {
-					email: session?.data?.user?.email
-				}
-			})
-		);
-		console.log(res);
-		await dispatch(
-			setProductInfo({
-				title: '',
-				price: '',
-				image: '',
-				sku: '',
-				author: { email: '' }
-			})
-		);
+		console.log(product);
 	};
 
 	return (
@@ -49,9 +26,8 @@ function ProductInputs({ setOpen, edit }) {
 							as="h3"
 							className=" text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4"
 						>
-							Add new Product
+							Edit Product
 						</Dialog.Title>
-
 						<form className="space-y-6 mt-2" action="#">
 							<div>
 								<label
@@ -66,14 +42,9 @@ function ProductInputs({ setOpen, edit }) {
 									id="newProduct"
 									className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 									placeholder="New Product"
-									value={productInfo.title}
+									value={product.title}
 									onChange={(e) =>
-										dispatch(
-											setProductInfo({
-												...productInfo,
-												title: e.target.value
-											})
-										)
+										dispatch(setProduct({ ...product, title: e.target.value }))
 									}
 									required
 								/>
@@ -94,11 +65,11 @@ function ProductInputs({ setOpen, edit }) {
 										id="price"
 										className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 										placeholder="0"
-										value={productInfo.price}
+										value={product.price}
 										onChange={(e) =>
 											dispatch(
-												setProductInfo({
-													...productInfo,
+												setProduct({
+													...product,
 													price: e.target.value
 												})
 											)
@@ -119,11 +90,11 @@ function ProductInputs({ setOpen, edit }) {
 									aria-describedby="file_input_help"
 									id="file_input"
 									type="file"
-									value={productInfo.image}
+									// value={product.image}
 									onChange={(e) =>
 										dispatch(
-											setProductInfo({
-												...productInfo,
+											setProduct({
+												...product,
 												image: e.target.value
 											})
 										)
@@ -136,32 +107,27 @@ function ProductInputs({ setOpen, edit }) {
 				</div>
 			</div>
 			<div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-				{/* todo, change different color if disabled */}
 				<button
 					disabled={
-						productInfo.title === '' ||
-						productInfo.price === '' ||
-						productInfo.image === ''
+						product.title === '' || product.price === '' || product.image === ''
 							? true
 							: false
 					}
 					type="button"
 					className="inline-flex w-full justify-center rounded-md border border-transparent bg-gray-900 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
 					onClick={(e) => {
-						handleAddProduct(e);
+						handleEditProduct(e);
 						setOpen(false);
 					}}
 				>
-					Add
+					Edit
 				</button>
 				<button
 					type="button"
 					className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 dark:border-none bg-white dark:bg-gray-500 dark:text-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
 					onClick={() => {
 						setOpen(false);
-						dispatch(
-							setProductInfo({ title: '', price: '', image: '', sku: '' })
-						);
+						dispatch(setProduct({ title: '', price: '', image: '' }));
 					}}
 					ref={cancelButtonRef}
 				>
@@ -172,4 +138,4 @@ function ProductInputs({ setOpen, edit }) {
 	);
 }
 
-export default ProductInputs;
+export default EditProductInput;
