@@ -1,4 +1,4 @@
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,17 +8,15 @@ import {
 	getProductsAsync
 } from '../redux/features/productSlice';
 
-function Products() {
+function Products({ data }) {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.products.products);
 	const [allProducts, setAllProducts] = useState([]);
 	const [selectedItems, setSelectedItems] = useState([]);
 
-	const { data: session } = useSession();
-
 	useEffect(() => {
-		session && dispatch(getProductsAsync(session?.user?.email));
-	}, [session]);
+		dispatch(getProductsAsync(data?.user?.email));
+	}, []);
 
 	const handleDeleteSelected = () => {
 		dispatch(deleteSelectedProductsAsync(selectedItems));
@@ -64,17 +62,13 @@ export const getServerSideProps = async (context) => {
 	const { req } = context;
 	const session = await getSession({ req });
 
-	console.log(session);
-
-	// const {email, image}
-
 	if (!session) {
 		return {
 			redirect: { destination: '/auth/login' }
 		};
 	}
-
+	console.log(session);
 	return {
-		props: { data: 'products' }
+		props: { data: session }
 	};
 };
