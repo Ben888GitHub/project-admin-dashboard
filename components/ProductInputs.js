@@ -30,7 +30,9 @@ function ProductInputs({ setOpen, edit }) {
 
 		const imageRef = ref(
 			storage,
-			`product-images/${imageUpload.name + uuid()}`
+			`gs://fir-v9-nextjs.appspot.com/product-images/${
+				imageUpload.name + uuid()
+			}`
 		);
 		const snapshot = await uploadBytes(imageRef, imageUpload);
 		const url = await getDownloadURL(snapshot.ref);
