@@ -21,7 +21,7 @@ function AllProducts({ product, setSelectedItems, selectedItems }) {
 
 	return (
 		<>
-			<div className="mt-10 rounded-lg  mx-auto w-80 bg-white  border border-gray-200 shadow-md dark:bg-[#2D3748] dark:border-gray-700">
+			<div className="mt-7 md:mt-8 lg:mt-8 rounded-lg  mx-auto w-80 bg-white  border border-gray-200 shadow-md dark:bg-[#2D3748] dark:border-gray-700">
 				<div>
 					<Image
 						className="rounded-t-lg"

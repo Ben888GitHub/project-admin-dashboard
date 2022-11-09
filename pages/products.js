@@ -1,9 +1,10 @@
 import { getSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from '../components/LoadingSpinner';
+import SearchProduct from '../components/SearchProduct';
 
 import {
 	deleteSelectedProductsAsync,
@@ -17,12 +18,19 @@ const AllProducts = dynamic(() => import('../components/AllProducts'), {
 function Products({ data }) {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.products.products);
+	const [query, setQuery] = useState('');
 	const [allProducts, setAllProducts] = useState([]);
 	const [selectedItems, setSelectedItems] = useState([]);
 
 	useEffect(() => {
 		dispatch(getProductsAsync(data?.user?.email));
 	}, []);
+
+	const filteredProducts = useMemo(() => {
+		return products.filter((product) =>
+			product.title.toLowerCase().includes(query.toLowerCase())
+		);
+	}, [products, query]);
 
 	const handleDeleteSelected = () => {
 		dispatch(deleteSelectedProductsAsync(selectedItems));
@@ -37,15 +45,13 @@ function Products({ data }) {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			{products.length > 0 && (
-				<p className="text-2xl text-center m-5">Search Bar</p>
-			)}
+			{products.length > 0 && <SearchProduct setQuery={setQuery} />}
 
 			{selectedItems.length > 0 && (
 				<div className="text-center">
 					<button
 						onClick={handleDeleteSelected}
-						className=" text-white justify-center align-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm md:text-md lg:text-md px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+						className="mt-5 text-white justify-center align-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm md:text-md lg:text-md px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
 					>
 						Remove selected products
 					</button>
@@ -59,7 +65,7 @@ function Products({ data }) {
 						</p>
 					}
 				>
-					{products.map((product, idx) => (
+					{filteredProducts.map((product, idx) => (
 						<AllProducts
 							key={idx}
 							product={product}

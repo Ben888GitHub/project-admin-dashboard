@@ -21,9 +21,6 @@ function ProductInputs({ setOpen, edit }) {
 
 	const handleAddProduct = async (e) => {
 		e.preventDefault();
-
-		// todo call uploadProductImage here
-
 		console.log(productInfo);
 
 		const res = await dispatch(
