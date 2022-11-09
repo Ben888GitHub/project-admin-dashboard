@@ -8,6 +8,15 @@ function AllProducts({ product, setSelectedItems, selectedItems }) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = useState(false);
 	const [isModal, setIsModal] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const handleDeleteProduct = async (sku) => {
+		setIsLoading(true);
+		const res = await dispatch(deleteProductAsync(sku));
+		if (res.payload) {
+			setIsLoading(false);
+		}
+	};
 
 	return (
 		<>
@@ -59,12 +68,15 @@ function AllProducts({ product, setSelectedItems, selectedItems }) {
 						<span className="text-2xl md:text-3xl lg:text-3xl font-bold text-gray-900 dark:text-white">
 							${product.price}
 						</span>
-						<button
-							onClick={() => dispatch(deleteProductAsync(product.sku))}
-							className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm md:text-md lg:text-md px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-						>
-							Delete
-						</button>
+						{product.sku && (
+							<button
+								disabled={isLoading}
+								onClick={() => handleDeleteProduct(product.sku)}
+								className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm md:text-md lg:text-md px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+							>
+								{isLoading ? 'Loading' : 'Delete'}
+							</button>
+						)}
 					</div>
 				</div>
 			</div>
