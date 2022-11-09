@@ -3,6 +3,7 @@ import { FaEdit } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { deleteProductAsync, setProduct } from '../redux/features/productSlice';
 import EditProductModal from './EditProductModal';
+import LoadingSpinner from './LoadingSpinner';
 
 function AllProducts({ product, setSelectedItems, selectedItems }) {
 	const dispatch = useDispatch();

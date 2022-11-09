@@ -3,7 +3,8 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useState, useEffect, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import AllProducts from '../components/AllProducts';
+import LoadingSpinner from '../components/LoadingSpinner';
+
 import {
 	deleteSelectedProductsAsync,
 	getProductsAsync
@@ -52,7 +53,11 @@ function Products({ data }) {
 			)}
 			<div className="flex flex-wrap ">
 				<Suspense
-					fallback={<p className="text-2xl text-center mx-auto">Loading...</p>}
+					fallback={
+						<p className="text-2xl text-center mx-auto">
+							<LoadingSpinner size={7} />
+						</p>
+					}
 				>
 					{products.map((product, idx) => (
 						<AllProducts
@@ -64,6 +69,11 @@ function Products({ data }) {
 					))}
 				</Suspense>
 			</div>
+			{products?.length === 0 && (
+				<p className=" text-lg md:text-2xl lg:text-2xl  text-center mx-auto mt-5">
+					No Products to show, please add new product
+				</p>
+			)}
 		</div>
 	);
 }
