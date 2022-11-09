@@ -9,16 +9,16 @@ import {
 	setProductInfo
 } from '../redux/features/productSlice';
 import uuid from 'react-uuid';
-import { storage } from '../firebase';
-// import { uploadProductImage } from '../utils/upload-image';
-import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
+import { useS3Upload } from 'next-s3-upload';
+
 function ProductInputs({ setOpen, edit }) {
 	const cancelButtonRef = useRef(null);
 	const dispatch = useDispatch();
 	const session = useSession();
 	const productInfo = useSelector((state) => state.products.productInfo);
 
-	const [imageUpload, setImageUpload] = useState(null);
+	let [imageUrl, setImageUrl] = useState();
+	let { uploadToS3, openFileDialog, files } = useS3Upload();
 
 	const handleAddProduct = async (e) => {
 		e.preventDefault();
@@ -26,22 +26,11 @@ function ProductInputs({ setOpen, edit }) {
 		// todo call uploadProductImage here
 
 		console.log(productInfo);
-		console.log(imageUpload);
-
-		const imageRef = ref(
-			storage,
-			`https://storage.googleapis.com/fir-v9-nextjs.appspot.com/product-images/${
-				imageUpload.name + uuid()
-			}`
-		);
-		const snapshot = await uploadBytes(imageRef, imageUpload);
-		const url = await getDownloadURL(snapshot.ref);
-		console.log(url);
 
 		const res = await dispatch(
 			addProductAsync({
 				...productInfo,
-				image: url,
+				// image: url,
 				sku: uuid().slice(0, uuid().length - 30),
 				author: {
 					email: session?.data?.user?.email
@@ -58,6 +47,16 @@ function ProductInputs({ setOpen, edit }) {
 				image: '',
 				sku: '',
 				author: { email: '' }
+			})
+		);
+	};
+	let handleImageUpload = async (e) => {
+		let file = e.target.files[0];
+		let { url } = await uploadToS3(file);
+		await dispatch(
+			setProductInfo({
+				...productInfo,
+				image: url
 			})
 		);
 	};
@@ -142,15 +141,7 @@ function ProductInputs({ setOpen, edit }) {
 									// id="file_input"
 									type="file"
 									// value={productInfo.image}
-									onChange={(e) =>
-										// dispatch(
-										// 	setProductInfo({
-										// 		...productInfo,
-										// 		image: e.target.value
-										// 	})
-										// )
-										setImageUpload(e.target.files[0])
-									}
+									onChange={handleImageUpload}
 									required
 								/>
 							</div>
@@ -164,12 +155,12 @@ function ProductInputs({ setOpen, edit }) {
 					disabled={
 						productInfo.title === '' ||
 						productInfo.price === '' ||
-						imageUpload === null
+						productInfo.image === ''
 							? true
 							: false
 					}
 					type="button"
-					className="inline-flex w-full justify-center rounded-md border border-transparent bg-gray-900 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+					className={`inline-flex w-full justify-center rounded-md border border-transparent bg-gray-900 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
 					onClick={(e) => {
 						handleAddProduct(e);
 						setOpen(false);
