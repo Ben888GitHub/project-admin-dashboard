@@ -30,7 +30,6 @@ function ProductInputs({ setOpen, edit }) {
 		const res = await dispatch(
 			addProductAsync({
 				...productInfo,
-				// image: url,
 				sku: uuid().slice(0, uuid().length - 30),
 				author: {
 					email: session?.data?.user?.email
