@@ -1,7 +1,0 @@
-https://github.com/Ben888GitHub/project-admin-dashboard
-
-Dropdown Menu
-https://www.youtube.com/watch?v=hwfiYvzH9s4
-
-Google OAuth Credentials
-https://console.cloud.google.com/apis/credentials?project=fir-v9-nextjs

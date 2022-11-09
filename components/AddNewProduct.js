@@ -18,6 +18,7 @@ function AddNewProduct() {
 				</span>
 				<br />
 			</button>
+			<meta name="viewport" content="width=device-width, user-scalable=no" />
 			<ProductModal open={open} setOpen={setOpen} />
 		</>
 	);
