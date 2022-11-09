@@ -7,7 +7,7 @@ const nextConfig = {
 		defaultLocale: 'en'
 	},
 	images: {
-		domains: ['i.ibb.co', 'flowbite.com'],
+		domains: ['i.ibb.co', 'flowbite.com', 'firebasestorage.googleapis.com'],
 		minimumCacheTTL: 31536000,
 		formats: ['image/webp']
 	}

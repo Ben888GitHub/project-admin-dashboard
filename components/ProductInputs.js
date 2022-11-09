@@ -1,7 +1,7 @@
 import { Dialog } from '@headlessui/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addProductAsync,
@@ -9,26 +9,46 @@ import {
 	setProductInfo
 } from '../redux/features/productSlice';
 import uuid from 'react-uuid';
-
+import { storage } from '../firebase';
+// import { uploadProductImage } from '../utils/upload-image';
+import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 function ProductInputs({ setOpen, edit }) {
 	const cancelButtonRef = useRef(null);
 	const dispatch = useDispatch();
 	const session = useSession();
 	const productInfo = useSelector((state) => state.products.productInfo);
 
+	const [imageUpload, setImageUpload] = useState(null);
+
 	const handleAddProduct = async (e) => {
 		e.preventDefault();
-		// console.log(productInfo);
+
+		// todo call uploadProductImage here
+
+		console.log(productInfo);
+		console.log(imageUpload);
+
+		const imageRef = ref(
+			storage,
+			`product-images/${imageUpload.name + uuid()}`
+		);
+		const snapshot = await uploadBytes(imageRef, imageUpload);
+		const url = await getDownloadURL(snapshot.ref);
+		console.log(url);
+
 		const res = await dispatch(
 			addProductAsync({
 				...productInfo,
+				image: url,
 				sku: uuid().slice(0, uuid().length - 30),
 				author: {
 					email: session?.data?.user?.email
 				}
 			})
 		);
+
 		console.log(res);
+
 		await dispatch(
 			setProductInfo({
 				title: '',
@@ -116,17 +136,18 @@ function ProductInputs({ setOpen, edit }) {
 								</label>
 								<input
 									className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-									aria-describedby="file_input_help"
-									id="file_input"
+									// aria-describedby="file_input_help"
+									// id="file_input"
 									type="file"
-									value={productInfo.image}
+									// value={productInfo.image}
 									onChange={(e) =>
-										dispatch(
-											setProductInfo({
-												...productInfo,
-												image: e.target.value
-											})
-										)
+										// dispatch(
+										// 	setProductInfo({
+										// 		...productInfo,
+										// 		image: e.target.value
+										// 	})
+										// )
+										setImageUpload(e.target.files[0])
 									}
 									required
 								/>
@@ -141,7 +162,7 @@ function ProductInputs({ setOpen, edit }) {
 					disabled={
 						productInfo.title === '' ||
 						productInfo.price === '' ||
-						productInfo.image === ''
+						imageUpload === null
 							? true
 							: false
 					}
