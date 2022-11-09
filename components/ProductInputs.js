@@ -30,7 +30,7 @@ function ProductInputs({ setOpen, edit }) {
 
 		const imageRef = ref(
 			storage,
-			`gs://fir-v9-nextjs.appspot.com/product-images/${
+			`https://storage.googleapis.com/fir-v9-nextjs.appspot.com/product-images/${
 				imageUpload.name + uuid()
 			}`
 		);
