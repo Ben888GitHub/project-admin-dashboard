@@ -58,8 +58,6 @@ export const productSlice = createSlice({
 			};
 		},
 		setProduct: (state, action) => {
-			// const { title, price, image, sku } = action.payload;
-			// console.log(action);
 			state.product = action.payload;
 		}
 	},
@@ -84,7 +82,13 @@ export const productSlice = createSlice({
 						(product) => !action.payload.includes(product.sku)
 					);
 				}
-			);
+			),
+			builder.addCase(updateSingleProductAsync.fulfilled, (state, action) => {
+				console.log(action);
+				state.products = state.products.map((product) =>
+					product.sku === action.payload.sku ? action.payload : product
+				);
+			});
 	}
 });
 
