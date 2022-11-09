@@ -2,7 +2,10 @@ import { Dialog } from '@headlessui/react';
 
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProduct } from '../redux/features/productSlice';
+import {
+	setProduct,
+	updateSingleProductAsync
+} from '../redux/features/productSlice';
 
 function EditProductInput({ setOpen }) {
 	const cancelButtonRef = useRef(null);
@@ -10,11 +13,12 @@ function EditProductInput({ setOpen }) {
 
 	const product = useSelector((state) => state.products.product);
 
-	console.log(product);
+	// console.log(product);
 
-	const handleEditProduct = (e) => {
+	const handleEditProduct = async (e) => {
 		e.preventDefault();
 		console.log(product);
+		await dispatch(updateSingleProductAsync(product));
 	};
 
 	return (
@@ -90,7 +94,7 @@ function EditProductInput({ setOpen }) {
 									aria-describedby="file_input_help"
 									id="file_input"
 									type="file"
-									// value={product.image}
+									// defaultValue={product.image}
 									onChange={(e) =>
 										dispatch(
 											setProduct({
@@ -125,10 +129,7 @@ function EditProductInput({ setOpen }) {
 				<button
 					type="button"
 					className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 dark:border-none bg-white dark:bg-gray-500 dark:text-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-					onClick={() => {
-						setOpen(false);
-						dispatch(setProduct({ title: '', price: '', image: '' }));
-					}}
+					onClick={() => setOpen(false)}
 					ref={cancelButtonRef}
 				>
 					Cancel

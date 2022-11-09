@@ -3,7 +3,8 @@ import {
 	addNewProduct,
 	deleteSelectedProducts,
 	deleteSingleProduct,
-	getProducts
+	getProducts,
+	updateSingleProduct
 } from '../../utils/api-functions';
 
 const initialState = {
@@ -37,6 +38,11 @@ export const deleteSelectedProductsAsync = createAsyncThunk(
 	async (payload) => await deleteSelectedProducts(payload)
 );
 
+export const updateSingleProductAsync = createAsyncThunk(
+	'data/updateSingleProductAsync',
+	async (payload) => await updateSingleProduct(payload)
+);
+
 export const productSlice = createSlice({
 	name: 'products',
 	initialState,
@@ -53,7 +59,7 @@ export const productSlice = createSlice({
 		},
 		setProduct: (state, action) => {
 			// const { title, price, image, sku } = action.payload;
-			console.log(action);
+			// console.log(action);
 			state.product = action.payload;
 		}
 	},

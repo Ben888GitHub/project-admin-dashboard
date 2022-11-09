@@ -60,10 +60,25 @@ const deleteSelectedProducts = async (payload) => {
 	return payload;
 };
 
+const updateSingleProduct = async (payload) => {
+	console.log(payload);
+	const res = await fetch(`/api/product/${payload.sku}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(payload)
+	});
+	const updateProduct = await res.json();
+	console.log(updateProduct);
+	return payload;
+};
+
 export {
 	registerUser,
 	addNewProduct,
 	getProducts,
 	deleteSingleProduct,
-	deleteSelectedProducts
+	deleteSelectedProducts,
+	updateSingleProduct
 };

@@ -15,5 +15,23 @@ export default async function handler(req, res) {
 			sku: query.sku
 		});
 		res.json({ status: 200, data: deleteProduct });
+	} else if (method === 'PUT') {
+		console.log(body);
+		console.log(query.sku);
+
+		const { title, price, image } = body;
+
+		const updateProduct = await products.updateOne(
+			{ sku: query.sku },
+			{
+				$set: {
+					title,
+					price,
+					image
+				}
+			}
+		);
+		console.log(updateProduct);
+		res.json({ status: 200, data: updateProduct });
 	}
 }
