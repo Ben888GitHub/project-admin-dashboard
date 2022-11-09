@@ -159,7 +159,13 @@ function ProductInputs({ setOpen, edit }) {
 							: false
 					}
 					type="button"
-					className={`inline-flex w-full justify-center rounded-md border border-transparent bg-gray-900 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
+					className={`inline-flex w-full justify-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white shadow-sm ${
+						productInfo.title === '' ||
+						productInfo.price === '' ||
+						productInfo.image === ''
+							? 'bg-gray-700 dark:bg-gray-800 cursor-not-allowed'
+							: 'bg-gray-900'
+					}  focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
 					onClick={(e) => {
 						handleAddProduct(e);
 						setOpen(false);
