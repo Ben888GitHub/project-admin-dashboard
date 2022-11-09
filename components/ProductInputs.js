@@ -5,7 +5,6 @@ import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addProductAsync,
-	setProduct,
 	setProductInfo
 } from '../redux/features/productSlice';
 import uuid from 'react-uuid';
@@ -136,10 +135,7 @@ function ProductInputs({ setOpen, edit }) {
 								</label>
 								<input
 									className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-									// aria-describedby="file_input_help"
-									// id="file_input"
 									type="file"
-									// value={productInfo.image}
 									onChange={handleImageUpload}
 									required
 								/>

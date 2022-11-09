@@ -1,11 +1,12 @@
 import { Dialog } from '@headlessui/react';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	setProduct,
 	updateSingleProductAsync
 } from '../redux/features/productSlice';
+import { useS3Upload } from 'next-s3-upload';
 
 function EditProductInput({ setOpen }) {
 	const cancelButtonRef = useRef(null);
@@ -13,12 +14,39 @@ function EditProductInput({ setOpen }) {
 
 	const product = useSelector((state) => state.products.product);
 
-	// console.log(product);
+	const [editProduct, setEditProduct] = useState({
+		title: '',
+		price: 1,
+		image: ''
+	});
+
+	let { uploadToS3, openFileDialog, files } = useS3Upload();
 
 	const handleEditProduct = async (e) => {
 		e.preventDefault();
+
+		const { title, price, image } = editProduct;
+
 		console.log(product);
-		await dispatch(updateSingleProductAsync(product));
+		console.log(editProduct);
+		const res = await dispatch(setProduct({ ...product, title, price, image }));
+		console.log(res);
+		if (res.payload) {
+			await dispatch(updateSingleProductAsync(res.payload));
+		}
+	};
+
+	let handleImageUpload = async (e) => {
+		let file = e.target.files[0];
+		let { url } = await uploadToS3(file);
+		console.log(url);
+		await setEditProduct({ ...editProduct, image: url });
+		// await dispatch(
+		// 	setProduct({
+		// 		...product,
+		// 		image: url
+		// 	})
+		// );
 	};
 
 	return (
@@ -46,9 +74,10 @@ function EditProductInput({ setOpen }) {
 									id="newProduct"
 									className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 									placeholder="New Product"
-									value={product.title}
+									value={editProduct.title}
 									onChange={(e) =>
-										dispatch(setProduct({ ...product, title: e.target.value }))
+										// dispatch(setProduct({ ...product, title: e.target.value }))
+										setEditProduct({ ...editProduct, title: e.target.value })
 									}
 									required
 								/>
@@ -69,14 +98,15 @@ function EditProductInput({ setOpen }) {
 										id="price"
 										className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 										placeholder="0"
-										value={product.price}
+										value={editProduct.price}
 										onChange={(e) =>
-											dispatch(
-												setProduct({
-													...product,
-													price: e.target.value
-												})
-											)
+											// dispatch(
+											// 	setProduct({
+											// 		...product,
+											// 		price: e.target.value
+											// 	})
+											// )
+											setEditProduct({ ...editProduct, price: e.target.value })
 										}
 										required
 									/>
@@ -94,15 +124,7 @@ function EditProductInput({ setOpen }) {
 									aria-describedby="file_input_help"
 									id="file_input"
 									type="file"
-									// defaultValue={product.image}
-									onChange={(e) =>
-										dispatch(
-											setProduct({
-												...product,
-												image: e.target.value
-											})
-										)
-									}
+									onChange={handleImageUpload}
 									required
 								/>
 							</div>
@@ -113,12 +135,18 @@ function EditProductInput({ setOpen }) {
 			<div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
 				<button
 					disabled={
-						product.title === '' || product.price === '' || product.image === ''
+						editProduct.title === '' ||
+						editProduct.price === '' ||
+						editProduct.image === ''
 							? true
 							: false
 					}
 					type="button"
-					className="inline-flex w-full justify-center rounded-md border border-transparent bg-gray-900 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+					className={`inline-flex w-full justify-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white shadow-sm ${
+						editProduct.title === '' || editProduct.price === ''
+							? 'bg-gray-700 dark:bg-gray-800 cursor-not-allowed'
+							: 'bg-gray-900'
+					}  focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
 					onClick={(e) => {
 						handleEditProduct(e);
 						setOpen(false);
