@@ -7,7 +7,6 @@ function SearchProduct({ setQuery }) {
 				id="search"
 				placeholder="Search Product"
 				className="justify-center  mx-auto w-72"
-				// required={true}
 				onChange={(e) => setQuery(e.target.value)}
 				addon={<HiSearch />}
 			/>

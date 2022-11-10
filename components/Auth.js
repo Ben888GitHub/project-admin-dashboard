@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import AuthLabel from './AuthLabel';
 import AuthButton from './AuthButton';
-import GoogleLogIn from './GoogleLogIn';
 
 function Auth({ register }) {
 	return (
@@ -25,14 +24,6 @@ function Auth({ register }) {
 								{register ? 'Sign in' : 'Sign up'}
 							</Link>
 						</p>
-
-						<div className="inline-flex justify-center items-center w-full">
-							<hr className=" w-full h-px border-0  bg-gray-200  dark:bg-gray-500" />
-							<span className="dark:bg-[#2D3748] bg-white absolute left-1/2 px-3 font-medium  -translate-x-1/2 ">
-								or
-							</span>
-						</div>
-						<GoogleLogIn />
 					</form>
 				</div>
 			</div>
