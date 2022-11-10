@@ -3,17 +3,20 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useState, useEffect, Suspense, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingSpinner from '../components/LoadingSpinner';
-import SearchProduct from '../components/SearchProduct';
+import LoadingSpinner from '../components/Products/LoadingSpinner';
+import SearchProduct from '../components/Products/SearchProduct';
 
 import {
 	deleteSelectedProductsAsync,
 	getProductsAsync
 } from '../redux/features/productSlice';
 
-const AllProducts = dynamic(() => import('../components/AllProducts'), {
-	suspense: true
-});
+const AllProducts = dynamic(
+	() => import('../components/Products/AllProducts'),
+	{
+		suspense: true
+	}
+);
 
 function Products({ data }) {
 	const dispatch = useDispatch();

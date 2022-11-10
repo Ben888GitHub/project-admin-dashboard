@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { createNewUserAsync } from '../redux/features/authSlice';
+import { createNewUserAsync } from '../../redux/features/authSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
@@ -35,12 +35,9 @@ function AuthButton({ register }) {
 
 	const handleSignUp = async (e) => {
 		e.preventDefault();
-		console.log(userInfo);
 		setIsLoading(true);
 		const res = await dispatch(createNewUserAsync(userInfo));
-		console.log(res);
 		if (res.payload.message === 'Registered successfully') {
-			console.log(userInfo);
 			await signUpSuccess(res.payload.message);
 			await signIn('credentials', {
 				...userInfo,
@@ -56,7 +53,6 @@ function AuthButton({ register }) {
 
 	const handleLogIn = async (e) => {
 		e.preventDefault();
-		console.log(userInfo);
 		setIsLoading(true);
 
 		const res = await signIn('credentials', {

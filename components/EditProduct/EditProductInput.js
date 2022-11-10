@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	setProduct,
 	updateSingleProductAsync
-} from '../redux/features/productSlice';
+} from '../../redux/features/productSlice';
 import { useS3Upload } from 'next-s3-upload';
 
 function EditProductInput({ setOpen }) {
@@ -20,7 +20,7 @@ function EditProductInput({ setOpen }) {
 		image: ''
 	});
 
-	let { uploadToS3, openFileDialog, files } = useS3Upload();
+	let { uploadToS3 } = useS3Upload();
 
 	const handleEditProduct = async (e) => {
 		e.preventDefault();
@@ -41,12 +41,6 @@ function EditProductInput({ setOpen }) {
 		let { url } = await uploadToS3(file);
 		console.log(url);
 		await setEditProduct({ ...editProduct, image: url });
-		// await dispatch(
-		// 	setProduct({
-		// 		...product,
-		// 		image: url
-		// 	})
-		// );
 	};
 
 	return (
@@ -76,7 +70,6 @@ function EditProductInput({ setOpen }) {
 									placeholder="New Product"
 									value={editProduct.title}
 									onChange={(e) =>
-										// dispatch(setProduct({ ...product, title: e.target.value }))
 										setEditProduct({ ...editProduct, title: e.target.value })
 									}
 									required
@@ -100,12 +93,6 @@ function EditProductInput({ setOpen }) {
 										placeholder="0"
 										value={editProduct.price}
 										onChange={(e) =>
-											// dispatch(
-											// 	setProduct({
-											// 		...product,
-											// 		price: e.target.value
-											// 	})
-											// )
 											setEditProduct({ ...editProduct, price: e.target.value })
 										}
 										required

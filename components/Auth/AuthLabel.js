@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo } from '../redux/features/authSlice';
+import { setUserInfo } from '../../redux/features/authSlice';
 
 function AuthLabel({ username }) {
 	const dispatch = useDispatch();
 
 	const userInfo = useSelector((state) => state.auth.userInfo);
-
-	// console.log(userInfo);
 
 	return (
 		<>

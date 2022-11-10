@@ -2,8 +2,11 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { deleteProductAsync, setProduct } from '../redux/features/productSlice';
-import EditProductModal from './EditProductModal';
+import {
+	deleteProductAsync,
+	setProduct
+} from '../../redux/features/productSlice';
+import EditProductModal from '../EditProduct/EditProductModal';
 
 function AllProducts({ product, setSelectedItems, selectedItems }) {
 	const dispatch = useDispatch();

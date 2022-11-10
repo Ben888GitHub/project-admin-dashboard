@@ -1,6 +1,5 @@
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
-import Image from 'next/image';
 import WelcomePage from '../components/WelcomePage';
 
 export default function Home({ auth }) {

@@ -1,10 +1,8 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import EditProductInput from './EditProductInput';
+import ProductInputs from './ProductInputs';
 
-function EditProductModal({ open, setOpen }) {
-	console.log('rerender');
-
+function ProductModal({ open, setOpen }) {
 	return (
 		<Transition.Root show={open} appear as={Fragment}>
 			<Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
@@ -33,7 +31,7 @@ function EditProductModal({ open, setOpen }) {
 						>
 							{/* This is to adjust the Dialog size and shape */}
 							<Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md">
-								<EditProductInput setOpen={setOpen} />
+								<ProductInputs setOpen={setOpen} />
 							</Dialog.Panel>
 						</Transition.Child>
 					</div>
@@ -43,4 +41,4 @@ function EditProductModal({ open, setOpen }) {
 	);
 }
 
-export default EditProductModal;
+export default ProductModal;

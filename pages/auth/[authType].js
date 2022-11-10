@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
-import Auth from '../../components/Auth';
+import Auth from '../../components/Auth/Auth';
 
 function AuthType({ authType }) {
 	const pageTitle = authType.charAt(0).toUpperCase() + authType.slice(1);

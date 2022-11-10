@@ -10,8 +10,6 @@ function classNames(...classes) {
 function AuthDropdown() {
 	const { data: session } = useSession();
 
-	// console.log(session);
-
 	return (
 		<Menu as="div" className="relative inline-block text-left mr-2">
 			<div>
@@ -32,16 +30,6 @@ function AuthDropdown() {
 			>
 				<Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-500 rounded-md bg-gray-600 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 					<div className="py-1">
-						{/* <Menu.Item>
-							<p
-								className={classNames(
-									'text-white',
-									'block px-4 py-2 text-sm font-medium'
-								)}
-							>
-								{session?.user?.username || session?.user?.name}
-							</p>
-						</Menu.Item> */}
 						<Menu.Item>
 							<p
 								className={classNames(

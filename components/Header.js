@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import AddNewProduct from './AddNewProduct';
-import AuthDropdown from './AuthDropdown';
+import AddNewProduct from './AddProduct/AddNewProduct';
+import AuthDropdown from './Auth/AuthDropdown';
 
 const ColorMode = dynamic(() => import('./ColorMode'), { ssr: false });
 

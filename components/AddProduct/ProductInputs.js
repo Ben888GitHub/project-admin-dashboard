@@ -1,12 +1,11 @@
 import { Dialog } from '@headlessui/react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addProductAsync,
 	setProductInfo
-} from '../redux/features/productSlice';
+} from '../../redux/features/productSlice';
 import uuid from 'react-uuid';
 import { useS3Upload } from 'next-s3-upload';
 
