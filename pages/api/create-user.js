@@ -32,6 +32,7 @@ export default async function handler(req, res) {
 		res
 			.status(200)
 			.json({ message: 'Please enter an email in the right format' });
+		return;
 	}
 	if (body.password.length < 6) {
 		res.status(200).json({ message: 'Password must be at least 6 characters' });
