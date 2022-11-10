@@ -2,7 +2,6 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import NextAuth from 'next-auth';
 import clientPromise from '../../../lib/mongodb';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import GoogleProvider from 'next-auth/providers/google';
 import { signInUser } from '../../../utils/signin-user';
 
 export default NextAuth({
@@ -11,10 +10,6 @@ export default NextAuth({
 		strategy: 'jwt'
 	},
 	providers: [
-		GoogleProvider({
-			clientId: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET
-		}),
 		CredentialsProvider({
 			name: 'credentials',
 			credentials: {},
@@ -28,7 +23,6 @@ export default NextAuth({
 				if (!checkUser) {
 					throw new Error("You haven't registered yet");
 				} else {
-					// console.log(checkUser);
 					return signInUser({ password, checkUser, username });
 				}
 			}
