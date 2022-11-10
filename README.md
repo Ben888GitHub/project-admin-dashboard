@@ -10,8 +10,8 @@ In the project directory, you can run:
 
 ## Getting Started
 
-1. Clone the repository and `cd` into its root directory.
-2. `cd` to the project directory and run `npm i` to install dependencies.
+1. Clone the repository and `cd` into its project root directory.
+2. Inside the directory, run `npm i` to install dependencies.
 3. Get your API Keys from [NextAuth](https://next-auth.js.org/), [MongoDB Atlas](https://www.mongodb.com/atlas/database), and [AWS S3](https://aws.amazon.com/s3/).
 4. Create `.env.local` file and place all your activated API Keys.
 5. Run `npm run dev` from the project directory to run in development mode
