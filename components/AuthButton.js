@@ -1,18 +1,40 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { createNewUserAsync, setUserInfo } from '../redux/features/authSlice';
-import toast, { Toaster } from 'react-hot-toast';
+import { createNewUserAsync } from '../redux/features/authSlice';
+// import toast, { Toaster } from 'react-hot-toast';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-const notify = (message) =>
+// const authFailure = (message) =>
+// 	toast(message, {
+// 		style: {
+// 			padding: '16px',
+// 			color: '#FFFFFF',
+// 			background: '#B91C1C'
+// 		}
+// 	});
+
+// const signUpSuccess = (message) => {
+// 	toast(message, {
+// 		style: {
+// 			padding: '16px',
+// 			color: '#FFFFFF',
+// 			background: '#15803d'
+// 		}
+// 	});
+// };
+
+const authFailure = (message) => {
 	toast(message, {
 		style: {
-			padding: '16px',
+			padding: '10px',
 			color: '#FFFFFF',
 			background: '#B91C1C'
 		}
 	});
+};
 
 const signUpSuccess = (message) => {
 	toast(message, {
@@ -48,10 +70,9 @@ function AuthButton({ register }) {
 			router.push('/products');
 			setIsLoading(false);
 		} else {
-			await notify(res.payload.message);
+			await authFailure(res.payload.message);
 			setIsLoading(false);
 		}
-		// await dispatch(setUserInfo({ username: '', email: '', password: '' }));
 	};
 
 	const handleLogIn = async (e) => {
@@ -64,7 +85,7 @@ function AuthButton({ register }) {
 			redirect: false
 		});
 		if (res?.error) {
-			await notify(res.error);
+			await authFailure(res.error);
 			setIsLoading(false);
 		} else if (res.status === 200) {
 			router.push('/products');
@@ -91,10 +112,22 @@ function AuthButton({ register }) {
 					{isLoading ? 'Loading...' : 'Sign in'}
 				</button>
 			)}
-			<Toaster
+			{/* <Toaster
 				toastOptions={{
 					duration: 2000
 				}}
+			/> */}
+			<ToastContainer
+				position="top-center"
+				autoClose={1500}
+				hideProgressBar={true}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss={false}
+				draggable={false}
+				pauseOnHover={false}
+				theme="colored"
 			/>
 		</>
 	);
