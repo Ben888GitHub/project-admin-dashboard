@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react';
 import { useSession } from 'next-auth/react';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addProductAsync,
@@ -9,14 +9,13 @@ import {
 import uuid from 'react-uuid';
 import { useS3Upload } from 'next-s3-upload';
 
-function ProductInputs({ setOpen, edit }) {
+function ProductInputs({ setOpen }) {
 	const cancelButtonRef = useRef(null);
 	const dispatch = useDispatch();
 	const session = useSession();
 	const productInfo = useSelector((state) => state.products.productInfo);
 
-	let [imageUrl, setImageUrl] = useState();
-	let { uploadToS3, openFileDialog, files } = useS3Upload();
+	let { uploadToS3 } = useS3Upload();
 
 	const handleAddProduct = async (e) => {
 		e.preventDefault();
