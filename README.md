@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Product Dashboard Application
+
+A Product Dashboard App made with NextJs, TailwindCSS, Redux, & MongoDB
+
+[screen-capture.webm](https://user-images.githubusercontent.com/50259107/201120731-0f64592c-6f76-49c6-96d0-6a93753f4f75.webm)
+
 
 ## Getting Started
 
