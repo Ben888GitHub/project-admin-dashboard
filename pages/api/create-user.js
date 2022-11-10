@@ -1,5 +1,6 @@
 import clientPromise from '../../lib/mongodb';
 import bcrypt from 'bcrypt';
+import validator from 'email-validator';
 
 export default async function handler(req, res) {
 	const client = await clientPromise;
@@ -9,6 +10,8 @@ export default async function handler(req, res) {
 	const { body } = req;
 
 	console.log(body);
+
+	const validateEmail = validator.validate(body.email);
 
 	// query the registered user by email
 	const registeredUser = await users.findOne({ email: body.email });
@@ -24,6 +27,11 @@ export default async function handler(req, res) {
 			.status(200)
 			.json({ message: 'Password / Email / Username cannot be empty' });
 		return;
+	}
+	if (validateEmail === false) {
+		res
+			.status(200)
+			.json({ message: 'Please enter an email in the right format' });
 	}
 	if (body.password.length < 6) {
 		res.status(200).json({ message: 'Password must be at least 6 characters' });
