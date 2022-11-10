@@ -1,30 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { createNewUserAsync } from '../redux/features/authSlice';
-// import toast, { Toaster } from 'react-hot-toast';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
-
-// const authFailure = (message) =>
-// 	toast(message, {
-// 		style: {
-// 			padding: '16px',
-// 			color: '#FFFFFF',
-// 			background: '#B91C1C'
-// 		}
-// 	});
-
-// const signUpSuccess = (message) => {
-// 	toast(message, {
-// 		style: {
-// 			padding: '16px',
-// 			color: '#FFFFFF',
-// 			background: '#15803d'
-// 		}
-// 	});
-// };
 
 const authFailure = (message) => {
 	toast(message, {
@@ -60,7 +40,6 @@ function AuthButton({ register }) {
 		const res = await dispatch(createNewUserAsync(userInfo));
 		console.log(res);
 		if (res.payload.message === 'Registered successfully') {
-			// alert(`Registered successfully`);
 			console.log(userInfo);
 			await signUpSuccess(res.payload.message);
 			await signIn('credentials', {
@@ -112,11 +91,6 @@ function AuthButton({ register }) {
 					{isLoading ? 'Loading...' : 'Sign in'}
 				</button>
 			)}
-			{/* <Toaster
-				toastOptions={{
-					duration: 2000
-				}}
-			/> */}
 			<ToastContainer
 				position="top-center"
 				autoClose={1500}

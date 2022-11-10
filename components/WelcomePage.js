@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import gameIllustration from '../images/Game analytics-amico.webp';
-import { useSession } from 'next-auth/react';
 
-function WelcomePage() {
-	const { data: session } = useSession();
+function WelcomePage({ auth }) {
+	console.log(auth);
 
 	return (
 		<div className="bg-[url('../images/toy_background.webp')]  mx-auto  bg-fixed mb-10">
@@ -23,7 +22,7 @@ function WelcomePage() {
 					WELCOME TO MIGHTY JAXX
 				</p>
 
-				{!session ? (
+				{!auth ? (
 					<Link href="/auth/login">
 						<button className=" mt-3 md:mt-7 lg:mt-7 text-white px-3 h-10 font-medium rounded-lg bg-gray-600 text-md  text-center  inline-flex items-center mr-4 hover:ring-2 ring-gray-400 transition-all duration-300 focus:outline-none">
 							SIGN IN
