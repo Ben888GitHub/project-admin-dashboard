@@ -21,7 +21,6 @@ function ProductInputs({ setOpen }) {
 
 	const handleAddProduct = async (e) => {
 		e.preventDefault();
-		console.log(productInfo);
 
 		const res = await dispatch(
 			addProductAsync({
@@ -32,8 +31,6 @@ function ProductInputs({ setOpen }) {
 				}
 			})
 		);
-
-		console.log(res);
 
 		await dispatch(
 			setProductInfo({
@@ -46,7 +43,6 @@ function ProductInputs({ setOpen }) {
 		);
 	};
 	let handleImageUpload = async (e) => {
-		console.log(e.target.files[0]);
 		let file = e.target.files[0];
 
 		if (file) {
@@ -157,7 +153,6 @@ function ProductInputs({ setOpen }) {
 				</div>
 			</div>
 			<div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-				{/* todo, change different color if disabled */}
 				<button
 					disabled={
 						productInfo.title === '' ||

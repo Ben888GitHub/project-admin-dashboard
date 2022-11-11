@@ -22,7 +22,6 @@ function Products({ data }) {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.products.products);
 	const [query, setQuery] = useState('');
-	const [allProducts, setAllProducts] = useState([]);
 	const [selectedItems, setSelectedItems] = useState([]);
 
 	useEffect(() => {

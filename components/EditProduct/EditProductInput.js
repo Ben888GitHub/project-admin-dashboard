@@ -26,13 +26,8 @@ function EditProductInput({ setOpen }) {
 
 	const handleEditProduct = async (e) => {
 		e.preventDefault();
-
 		const { title, price, image } = editProduct;
-
-		console.log(product);
-		console.log(editProduct);
 		const res = await dispatch(setProduct({ ...product, title, price, image }));
-		console.log(res);
 		if (res.payload) {
 			await dispatch(updateSingleProductAsync(res.payload));
 		}
