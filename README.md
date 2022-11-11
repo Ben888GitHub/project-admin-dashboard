@@ -1,34 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Product Dashboard Application 🎁
+
+A Product Dashboard App made with NextJs, TailwindCSS, Redux, & MongoDB
+
+[screen-capture.webm](https://user-images.githubusercontent.com/50259107/201120731-0f64592c-6f76-49c6-96d0-6a93753f4f75.webm)
+
+## Overview
+
+In the project directory, you can run:
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository and `cd` into its project root directory.
+2. Inside the directory, run `npm i` to install dependencies.
+3. Get your API Keys from [NextAuth](https://next-auth.js.org/), [MongoDB Atlas](https://www.mongodb.com/atlas/database), and [AWS S3](https://aws.amazon.com/s3/).
+4. Create `.env.local` file and place all your activated API Keys.
+5. Run `npm run dev` from the project directory to run in development mode
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This application is served at [http://localhost:3000](http://localhost:3000) by default.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+---
+## 💻 Technologies `</>`
+[![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+[![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Usages
+- In every pages of the app, users can toggle either `light` or `dark` color mode from [next-theme](https://www.npmjs.com/package/next-themes) based on your preferences.
+- Users will need to be authenticated by either `Sign in` or `Sign up` from [next-auth](https://www.npmjs.com/package/next-auth) in order to access the Product page.
+- Users will be prompted to key in correct credentials to be safely authenticated.
+- Successfully registered users will be stored in MongoDB
+- In Product Page, products are queried from the database based on the authenticated users.
+- In Product page, users can: 
+  - create new products.
+  - edit or delete any product.
+  - select multiple products and delete.
+  - search and filter product.
+- Products data are stored in MongoDB.
+- Users are able to log out from their account and re-authenticate.
+- Pages are responsive on both Desktop and Mobile.
