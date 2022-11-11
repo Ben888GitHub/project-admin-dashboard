@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react';
 import { useSession } from 'next-auth/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addProductAsync,
@@ -14,6 +14,8 @@ function ProductInputs({ setOpen }) {
 	const dispatch = useDispatch();
 	const session = useSession();
 	const productInfo = useSelector((state) => state.products.productInfo);
+
+	const [isUploading, setIsUploading] = useState(false);
 
 	let { uploadToS3 } = useS3Upload();
 
@@ -44,14 +46,28 @@ function ProductInputs({ setOpen }) {
 		);
 	};
 	let handleImageUpload = async (e) => {
+		console.log(e.target.files[0]);
 		let file = e.target.files[0];
-		let { url } = await uploadToS3(file);
-		await dispatch(
-			setProductInfo({
-				...productInfo,
-				image: url
-			})
-		);
+
+		if (file) {
+			setIsUploading(true);
+			let { url } = await uploadToS3(file);
+			await dispatch(
+				setProductInfo({
+					...productInfo,
+					image: url
+				})
+			);
+		} else {
+			await dispatch(
+				setProductInfo({
+					...productInfo,
+					image: ''
+				})
+			);
+		}
+
+		setIsUploading(false);
 	};
 
 	return (
@@ -129,6 +145,7 @@ function ProductInputs({ setOpen }) {
 									Upload Image
 								</label>
 								<input
+									disabled={isUploading}
 									className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
 									type="file"
 									onChange={handleImageUpload}
@@ -145,7 +162,8 @@ function ProductInputs({ setOpen }) {
 					disabled={
 						productInfo.title === '' ||
 						productInfo.price === '' ||
-						productInfo.image === ''
+						productInfo.image === '' ||
+						isUploading
 							? true
 							: false
 					}
@@ -162,7 +180,7 @@ function ProductInputs({ setOpen }) {
 						setOpen(false);
 					}}
 				>
-					Add
+					{isUploading ? 'Uploading Image...' : 'Add'}
 				</button>
 				<button
 					type="button"

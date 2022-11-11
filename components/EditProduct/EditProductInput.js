@@ -20,6 +20,8 @@ function EditProductInput({ setOpen }) {
 		image: ''
 	});
 
+	const [isUploading, setIsUploading] = useState(false);
+
 	let { uploadToS3 } = useS3Upload();
 
 	const handleEditProduct = async (e) => {
@@ -38,9 +40,14 @@ function EditProductInput({ setOpen }) {
 
 	let handleImageUpload = async (e) => {
 		let file = e.target.files[0];
-		let { url } = await uploadToS3(file);
-		console.log(url);
-		await setEditProduct({ ...editProduct, image: url });
+		if (file) {
+			setIsUploading(true);
+			let { url } = await uploadToS3(file);
+			await setEditProduct({ ...editProduct, image: url });
+		} else {
+			await setEditProduct({ ...editProduct, image: '' });
+		}
+		setIsUploading(false);
 	};
 
 	return (
@@ -107,9 +114,8 @@ function EditProductInput({ setOpen }) {
 									Upload Image
 								</label>
 								<input
+									disabled={isUploading}
 									className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-									aria-describedby="file_input_help"
-									id="file_input"
 									type="file"
 									onChange={handleImageUpload}
 									required
@@ -124,7 +130,8 @@ function EditProductInput({ setOpen }) {
 					disabled={
 						editProduct.title === '' ||
 						editProduct.price === '' ||
-						editProduct.image === ''
+						editProduct.image === '' ||
+						isUploading
 							? true
 							: false
 					}
@@ -139,7 +146,7 @@ function EditProductInput({ setOpen }) {
 						setOpen(false);
 					}}
 				>
-					Edit
+					{isUploading ? 'Uploading Image...' : 'Edit'}
 				</button>
 				<button
 					type="button"
